@@ -1,32 +1,28 @@
 #import more here
 import streamlit as st
+from PIL import Image
+from predict import predict
 
 showresult = 0
-
-# load model
 
 st.header('Equipment Identification')
 
 st.title("Predict New Images")
 uploadedfile = st.file_uploader("Choose Image", type = ['jpg','png','jpeg'])
+
 if st.button('Predict') and uploadedfile is not None:
+    image = Image.open(uploadedfile)
+    image.save("images/tmp_image.jpg")
+    prediction = predict("images/tmp_image.jpg")
     showresult = 1
-    # make prediction
-
-
 
 if showresult == 1:
-#     un-comment this after implementing AI
-#     st.image(predictedimage, caption=equipmentname) 
-#     st.title("Commonly seen damages")
-#     check1 = st.checkbox("placeholder1")
-#     check2 = st.checkbox("placeholder2")
-#     check3 = st.checkbox("placeholder3")
-#     check3 = st.checkbox("others")
+
     st.title("Result")
-    st.write("Image placeholder")
-    st.write("Predicted equipment name placeholder")
+    st.image(uploadedfile, caption = 'uploaded image',width = 200, use_column_width=True)
+    st.title("Prediction:")
+    st.write(prediction)
     st.title("Description")
-    st.text_input("Enter some description")
+    st.text_input("Tell us about the problem")
     if st.button('submit'):
         showresult = 0
