@@ -3,35 +3,11 @@ from collections import Counter
 import numpy as np
 from numpy.linalg import norm
 import pickle
-from tqdm import tqdm, tqdm_notebook
-import os
-import random
-import time
-import math
-import tensorflow
 from tensorflow.keras.preprocessing import image
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
-from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras.applications.vgg19 import VGG19
-from tensorflow.keras.applications.mobilenet import MobileNet
-from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, Flatten, Dense, Dropout, GlobalAveragePooling2D
 import numpy as np
 import pickle
-from tqdm import tqdm, tqdm_notebook
-import random
-import time
-from sklearn.manifold import TSNE
-from sklearn.decomposition import PCA
-import PIL
-from PIL import Image
 from sklearn.neighbors import NearestNeighbors
-import glob
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 
 training_img_labels = ["cold drink freezer", 
                        "cold drink freezer",
