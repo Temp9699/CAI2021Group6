@@ -34,7 +34,7 @@ if uploadedfile is not None:
     st.text_input("Enter some description")
 
     # Display predictions
-    st.title("Predicton")
+    st.title("Prediction")
     for i in range(len(prediction)):
         st.checkbox(prediction[i])
     # Submit button
