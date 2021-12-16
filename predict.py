@@ -72,7 +72,7 @@ training_img_labels = ["cold drink freezer",
                       "ice maker",]
 
 #link file directory (hard code)
-filenames = ["datasets/cold drink freezer/20211124_114324(0).jpg",
+filenames = ["datasets/cai2/cold drink freezer/20211124_114324(0).jpg",
             "datasets/cai2/cold drink freezer/20211124_114324(0).jpg",
              "datasets/cai2/cold drink freezer/20211124_114326(0).jpg",
              "datasets/cai2/cold drink freezer/20211124_114327(0).jpg",
@@ -169,4 +169,4 @@ def predict(query_image):
     most_common_labels =  label_counter.most_common(5)
     most_common_label_str = [label for label, freq in most_common_labels]
 
-    return most_common_label_str
+    return most_common_label_str, indices
