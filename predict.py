@@ -73,22 +73,22 @@ training_img_labels = ["cold drink freezer",
 
 #link file directory (hard code)
 filenames = ["datasets/cai2/cold drink freezer/20211124_114324(0).jpg",
-            "datasets/cai2/cold drink freezer/20211124_114324(0).jpg",
-             "datasets/cai2/cold drink freezer/20211124_114326(0).jpg",
-             "datasets/cai2/cold drink freezer/20211124_114327(0).jpg",
-             "datasets/cai2/cold drink freezer/20211124_114328.jpg",
-            "datasets/cai2/cold drink freezer/20211124_114330(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114329.jpg",
+             "datasets/cai2/cold drink freezer/20211124_114333.jpg",
+             "datasets/cai2/cold drink freezer/20211124_114334(0).jpg",
+             "datasets/cai2/cold drink freezer/20211124_114340(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114343.jpg",
             "datasets/cai2/cold drink freezer/20211124_114331.jpg",
-            "datasets/cai2/cold drink freezer/20211124_114332.jpg",
-            "datasets/cai2/cold drink freezer/20211124_114334.jpg",
-            "datasets/cai2/cold drink freezer/20211124_114335.jpg",
-            "datasets/cai2/cold drink freezer/20211124_114336.jpg",
-            "datasets/cai2/cold drink freezer/20211124_114338.jpg",
-            "datasets/cai2/cold drink freezer/20211124_114340(0).jpg",
-            "datasets/cai2/cold drink freezer/20211124_114341(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114358(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114404(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114344(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114342(0).jpg",
             "datasets/cai2/cold drink freezer/20211124_114342.jpg",
-            "datasets/cai2/cold drink freezer/20211124_114345(0).jpg",
-            "datasets/cai2/cold drink freezer/20211124_114347(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114347.jpg",
+            "datasets/cai2/cold drink freezer/20211124_114348(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114352(0).jpg",
+            "datasets/cai2/cold drink freezer/20211124_114359.jpg",
+            "datasets/cai2/cold drink freezer/20211124_114407.jpg",
             "datasets/cai2/EDC/20211210_123243_001 - Copy.jpg",
              "datasets/cai2/EDC/20211210_123243_004.jpg",
              "datasets/cai2/EDC/20211210_123243_007.jpg",
@@ -134,12 +134,6 @@ filenames = ["datasets/cai2/cold drink freezer/20211124_114324(0).jpg",
              "datasets/cai2/ice maker/IMG_25641210_123026_Burst18.jpg",
              "datasets/cai2/ice maker/IMG_25641210_123026_Burst19.jpg",
             ]
-
-model = ResNet50(weights='imagenet',
-                         include_top=False,
-                         input_shape=(224, 224, 3),
-                        pooling='max')
-
 def extract_features(img_path, model):
     input_shape = (224, 224, 3)
     img = image.load_img(img_path,
@@ -152,13 +146,18 @@ def extract_features(img_path, model):
     normalized_features = flattened_features / norm(flattened_features)
     return normalized_features
 
+model = ResNet50(weights='imagenet',
+                         include_top=False,
+                         input_shape=(224, 224, 3),
+                        pooling='max')
+
 #this is main module
 import pickle
 def predict(query_image):
     filenames = pickle.load(open('pickle/filenames-cai50.pickle', 'rb'))
     feature_list = pickle.load(open('pickle/features-cai50-resnet.pickle','rb'))
     class_ids = pickle.load(open('pickle/class_ids-cai50.pickle', 'rb'))
-    #nearest neighbors fitting             
+    #nearest neighbors fitting              
     neighbors = NearestNeighbors(n_neighbors=5, algorithm='brute', metric='euclidean').fit(feature_list)
     #add picture directory here           
     query_image_feature = extract_features(query_image ,model)
@@ -168,5 +167,6 @@ def predict(query_image):
     label_counter = Counter(similar_img_labels)
     most_common_labels =  label_counter.most_common(5)
     most_common_label_str = [label for label, freq in most_common_labels]
+    indices = (indices)
 
-    return most_common_label_str, indices
+    return most_common_label_str, indices[0]
