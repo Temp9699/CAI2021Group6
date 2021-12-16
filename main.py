@@ -1,28 +1,38 @@
-#import more here
+#import
 import streamlit as st
 from PIL import Image
-from predict import predict
+from predict import predict, similar_image
 
-showresult = 0
-
+# uploading image
 st.header('Equipment Identification')
-
 st.title("Predict New Images")
 uploadedfile = st.file_uploader("Choose Image", type = ['jpg','png','jpeg'])
 
-if st.button('Predict') and uploadedfile is not None:
+if uploadedfile is not None:
+    # Make prediction
     image = Image.open(uploadedfile)
     image.save("images/tmp_image.jpg")
     prediction = predict("images/tmp_image.jpg")
-    showresult = 1
 
-if showresult == 1:
+    # Display uploaded image
+    st.title("Uploaded image")
+    st.image(uploadedfile, caption = 'uploaded image',width = 500)
 
-    st.title("Result")
-    st.image(uploadedfile, caption = 'uploaded image',width = 200, use_column_width=True)
-    st.title("Prediction:")
-    st.write(prediction)
+    # Display similar images
+    # st.title("Similar images")
+    # similar1 = Image.open("CAI2\EDC\similar.jpg")
+    # st.image(similar1 ,width = 500)
+    # similar2 = Image.open("CAI2\EDC\similar2.jpg")
+    # st.image(similar2 ,width = 500)
+
+    # Display description
     st.title("Description")
-    st.text_input("Tell us about the problem")
-    if st.button('submit'):
-        showresult = 0
+    st.text_input("Enter some description")
+
+    # Display predictions
+    st.title("Predicton")
+    for i in range(len(prediction)):
+        st.checkbox(prediction[i])
+
+    # Submit button
+    st.button("Submit")
